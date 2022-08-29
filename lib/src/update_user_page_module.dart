@@ -7,6 +7,6 @@ class UpdateUserPageModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-    ChildRoute(Modular.initialRoute, child: (context, args) => const UpdateUserPage()),
+    ChildRoute(Modular.initialRoute, child: (context, args) => UpdateUserPage(user: args.data,)),
   ];
 }

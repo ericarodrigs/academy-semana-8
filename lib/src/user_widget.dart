@@ -18,7 +18,7 @@ class UserWidget extends StatelessWidget {
           color: Colors.grey,
           child: InkWell(
             onTap: () =>
-                Modular.to.pushNamed('/create/update/', arguments: user),
+                Modular.to.pushNamed('/update/', arguments: user),
             onLongPress: () => showDialog<String>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
@@ -42,6 +42,11 @@ class UserWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: Icon(Icons.female),
+                    ),
                     Text(user.name!),
                     Text(user.email!),
                     Text(user.gender!),
