@@ -1,5 +1,6 @@
 import 'package:exercicio_semana08/src/feature/home/model/user_model.dart';
 import 'package:exercicio_semana08/src/feature/home/view/widgets/user_widget.dart';
+import 'package:exercicio_semana08/src/feature/home/viewmodel/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -11,11 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<UserModel> listUsers = [
-    UserModel(id: 1, name: 'EricaEricaEricaEricaEricaEricaErica', email: 'e@e.come@e.come@e.come@e.come@e.come@e.come@e.com', gender: 'Feminino'),
-    UserModel(id: 2, name: 'Erica2', email: 'e2@e2.come2@e2.come2@e2.come2@e2.come2@e2.come2@e2.com', gender: 'Feminino'),
-    UserModel(id: 3, name: 'Erica3', email: 'e3@e3.com', gender: 'Masculino'),
-  ];
+  final HomeViewModel viewModel = Modular.get<HomeViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +20,38 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Usuários'),
       ),
-      body: GridView.builder(
-          itemCount: listUsers.length,
-          itemBuilder: (context, index) {
-            return UserWidget(
-              user: listUsers[index],
-            );
-          },
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2)),
+      body: StreamBuilder<List<UserModel>>(
+        stream: viewModel.stream,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+            case ConnectionState.none:
+              return const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 5.0,
+                ),
+              );
+            default:
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text('Erro: ${snapshot.error.toString()}'),
+                );
+              } else {
+                return GridView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return UserWidget(
+                        user: snapshot.data![index],
+                      );
+                    },
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2));
+              }
+          }
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Modular.to.pushNamed('/create/');

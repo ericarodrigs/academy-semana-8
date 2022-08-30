@@ -6,8 +6,8 @@ class DioService implements ApiService{
   Dio dio = Dio(BaseOptions(baseUrl: 'https://gorest.co.in/public/v2',));
 
   @override
-  Future get({required String route, Map<String, dynamic>? params }) async {
-    var response = await dio.get(route, queryParameters: params);
+  Future get({required String route}) async {
+    var response = await dio.get(route);
     return response;
   }
 

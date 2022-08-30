@@ -48,7 +48,7 @@ class _UpdateUserPageState extends State<UpdateUserPage> {
                       borderSide: BorderSide(color: Colors.blue, width: 1.5),
                     ),
                   ),
-                  items: <String>['Feminino', 'Masculino']
+                  items: <String>['female', 'male']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

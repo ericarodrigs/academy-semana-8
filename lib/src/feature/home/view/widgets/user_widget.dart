@@ -15,9 +15,18 @@ class UserWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4.0),
           ),
-          color: const Color(0xFFF2F5FA),
+          color: user.status == 'active' ?  const Color(0xFFF2F5FA) : Colors.white30,
           child: InkWell(
-            onTap: () => Modular.to.pushNamed('/update/', arguments: user),
+            onTap: user.status == 'active'
+                ? () => Modular.to.pushNamed('/update/', arguments: user)
+                : () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text('Usuário inativo'),
+                      action: SnackBarAction(
+                        label: 'Ok',
+                        onPressed: () {
+                        },
+                      ),
+                    )),
             onLongPress: () => showDialog<String>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
@@ -42,11 +51,10 @@ class UserWidget extends StatelessWidget {
                   height: 80,
                   width: 80,
                   child: Icon(
-                    user.gender == 'Feminino'
-                        ? Icons.woman
-                        : Icons.man,
-                    size: 80,
-                    color: user.gender == 'Feminino' ? Colors.purple : Colors.green,
+                    user.gender == 'female' ? Icons.woman : Icons.man,
+                    size: 60,
+                    color:
+                        user.gender == 'female' ? Colors.purple : Colors.green,
                   ),
                 ),
                 Padding(
