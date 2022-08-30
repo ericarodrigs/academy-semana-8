@@ -11,9 +11,9 @@ class UpdateUserPage extends StatefulWidget {
 }
 
 class _UpdateUserPageState extends State<UpdateUserPage> {
-  String dropdownValue = '';
   UserModel user = Modular.args.data;
   final HomeViewModel viewModel = Modular.get<HomeViewModel>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,62 +21,80 @@ class _UpdateUserPageState extends State<UpdateUserPage> {
       appBar: AppBar(
         title: const Text('Editar'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextFormField(
-              initialValue: user.name,
-              decoration: const InputDecoration(labelText: 'Nome'),
-              onChanged: (String name) {
-                user.name = name;
-              },
-            ),
-            TextFormField(
-              initialValue: user.email,
-              decoration: const InputDecoration(labelText: 'Email'),
-              onChanged: (String name) {
-                user.email = name;
-              },
-            ),
-            DropdownButtonHideUnderline(
-              child: DropdownButtonFormField(
-                  value: user.gender,
-                  isExpanded: true,
-                  isDense: true,
-                  decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 1.5),
-                    ),
-                  ),
-                  items: <String>['female', 'male']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: const TextStyle(fontSize: 18),
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  initialValue: user.name,
+                  validator: (name) =>
+                      name == null || name.isEmpty ? 'Nome obrigatório' : null,
+                  decoration: const InputDecoration(labelText: 'Nome'),
+                  onChanged: (String name) {
+                    user.name = name;
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.emailAddress,
+                  initialValue: user.email,
+                  validator: (email) =>
+                  email == null || email.isEmpty || !email.contains('@') ? 'Email obrigatório ou inválido' : null,
+                  decoration: const InputDecoration(labelText: 'Email'),
+                  onChanged: (String name) {
+                    user.email = name;
+                  },
+                ),
+              ),
+              DropdownButtonHideUnderline(
+                child: DropdownButtonFormField(
+                    value: user.gender,
+                    validator: (gender) =>
+                        gender == null ? 'Gênero obrigatório' : null,
+                    isExpanded: true,
+                    isDense: true,
+                    decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue, width: 1.5),
                       ),
-                    );
-                  }).toList(),
-                  onChanged: (String? gender) {
-                    setState(() {
-                      dropdownValue = gender!;
-                      user.gender = gender;
-                    });
-                  }),
-            )
-          ],
+                    ),
+                    items: <String>['female', 'male']
+                        .map<DropdownMenuItem<String>>((String gender) {
+                      return DropdownMenuItem<String>(
+                        value: gender,
+                        child: Text(
+                          gender == 'female' ? 'Feminino' : 'Masculino',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? gender) {
+                      setState(() {
+                        user.gender = gender!;
+                      });
+                    }),
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          viewModel.updateUser(user);
-          Modular.to.navigate('/');
-          viewModel.getUsers();
+          if (_formKey.currentState!.validate()) {
+            viewModel.updateUser(user);
+            Modular.to.navigate('/');
+          }
         },
-        tooltip: 'Increment',
+        tooltip: 'Alterar',
         child: const Icon(Icons.check),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

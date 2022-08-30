@@ -23,14 +23,16 @@ class HomeViewModel {
 
   Future<void> deleteUser(int id) async {
     await datasource.deleteUser(id);
+    sink.add(await datasource.getUsers());
   }
 
-  Future<void> postUsers(UserModel user) async {
+  Future<dynamic> postUsers(UserModel user) async {
     await datasource.postUsers(user);
-    print(user);
+    sink.add(await datasource.getUsers());
   }
 
   Future<void> updateUser(UserModel user) async {
     await datasource.putUser(user);
+    sink.add(await datasource.getUsers());
   }
 }

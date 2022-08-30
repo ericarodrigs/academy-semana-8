@@ -8,7 +8,6 @@ class UserModel {
   UserModel({this.id, required this.name, required this.email, required this.gender, this.status = 'active'});
 
   Map<String, dynamic> toJson() => {
-    'id': id,
     'name': name,
     'email': email,
     'gender': gender,

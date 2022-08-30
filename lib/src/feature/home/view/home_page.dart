@@ -17,7 +17,6 @@ class _HomePageState extends State<HomePage> {
   action(UserModel user) {
     viewModel.deleteUser(user.id!);
     Modular.to.pop();
-    viewModel.getUsers();
   }
 
   @override
@@ -65,7 +64,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Modular.to.pushNamed('/create/');
         },
-        tooltip: 'Increment',
+        tooltip: 'Adicionar',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
