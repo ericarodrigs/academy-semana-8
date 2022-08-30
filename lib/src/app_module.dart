@@ -1,4 +1,4 @@
-import 'package:exercicio_semana08/src/home_page_module.dart';
+import 'package:exercicio_semana08/src/feature/home/modules/home_page_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AppModule extends Module {

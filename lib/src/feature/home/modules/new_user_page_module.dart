@@ -1,4 +1,4 @@
-import 'package:exercicio_semana08/src/new_user_page.dart';
+import 'package:exercicio_semana08/src/feature/home/view/new_user_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class NewUserPageModule extends Module {

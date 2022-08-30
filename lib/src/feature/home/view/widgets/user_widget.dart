@@ -1,4 +1,4 @@
-import 'package:exercicio_semana08/src/user_model.dart';
+import 'package:exercicio_semana08/src/feature/home/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

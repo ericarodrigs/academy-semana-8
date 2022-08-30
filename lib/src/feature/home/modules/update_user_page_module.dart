@@ -1,4 +1,4 @@
-import 'package:exercicio_semana08/src/update_user_page.dart';
+import 'package:exercicio_semana08/src/feature/home/view/update_user_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class UpdateUserPageModule extends Module {

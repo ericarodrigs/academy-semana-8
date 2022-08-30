@@ -1,5 +1,5 @@
-import 'package:exercicio_semana08/src/user_model.dart';
-import 'package:exercicio_semana08/src/user_widget.dart';
+import 'package:exercicio_semana08/src/feature/home/model/user_model.dart';
+import 'package:exercicio_semana08/src/feature/home/view/widgets/user_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
