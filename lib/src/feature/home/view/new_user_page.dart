@@ -1,3 +1,5 @@
+import 'package:exercicio_semana08/src/feature/home/model/user_model.dart';
+import 'package:exercicio_semana08/src/feature/home/viewmodel/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -10,7 +12,9 @@ class NewUserPage extends StatefulWidget {
 
 class _NewUserPageState extends State<NewUserPage> {
   String dropdownValue = '';
-
+  final HomeViewModel viewModel = Modular.get<HomeViewModel>();
+  UserModel user = UserModel(name: '', email: '', gender: '');
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +28,15 @@ class _NewUserPageState extends State<NewUserPage> {
           children: [
             TextFormField(
               decoration: InputDecoration(labelText: 'Nome'),
+                onChanged: (String name) {
+                  user.name = name;
+                },
             ),
             TextFormField(
               decoration: InputDecoration(labelText: 'Email'),
+              onChanged: (String email) {
+                user.email = email;
+              },
             ),
             DropdownButtonHideUnderline(
               child: DropdownButtonFormField(
@@ -47,9 +57,10 @@ class _NewUserPageState extends State<NewUserPage> {
                       ),
                     );
                   }).toList(),
-                  onChanged: (String? newValue) {
+                  onChanged: (String? gender) {
                     setState(() {
-                      dropdownValue = newValue!;
+                      dropdownValue = gender!;
+                        user.gender = gender;
                     });
                   }),
             )
@@ -58,7 +69,9 @@ class _NewUserPageState extends State<NewUserPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          viewModel.postUsers(user);
           Modular.to.navigate('/');
+          viewModel.getUsers();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.save),

@@ -1,4 +1,5 @@
 import 'package:exercicio_semana08/src/feature/home/model/user_model.dart';
+import 'package:exercicio_semana08/src/feature/home/viewmodel/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -12,6 +13,7 @@ class UpdateUserPage extends StatefulWidget {
 class _UpdateUserPageState extends State<UpdateUserPage> {
   String dropdownValue = '';
   UserModel user = Modular.args.data;
+  final HomeViewModel viewModel = Modular.get<HomeViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +29,14 @@ class _UpdateUserPageState extends State<UpdateUserPage> {
             TextFormField(
               initialValue: user.name,
               decoration: const InputDecoration(labelText: 'Nome'),
-              onChanged: (String? name) {
+              onChanged: (String name) {
                 user.name = name;
               },
             ),
             TextFormField(
               initialValue: user.email,
               decoration: const InputDecoration(labelText: 'Email'),
-              onChanged: (String? name) {
+              onChanged: (String name) {
                 user.email = name;
               },
             ),
@@ -70,8 +72,9 @@ class _UpdateUserPageState extends State<UpdateUserPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          viewModel.updateUser(user);
           Modular.to.navigate('/');
-          print('SAIDJHJKASDFHJASDKHJKSDFHLK' +user.toString());
+          viewModel.getUsers();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.check),

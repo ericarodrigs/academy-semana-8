@@ -14,6 +14,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final HomeViewModel viewModel = Modular.get<HomeViewModel>();
 
+  action(UserModel user) {
+    viewModel.deleteUser(user.id!);
+    Modular.to.pop();
+    viewModel.getUsers();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +49,9 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       return UserWidget(
                         user: snapshot.data![index],
+                        action: () {
+                          action(snapshot.data![index]);
+                        },
                       );
                     },
                     gridDelegate:

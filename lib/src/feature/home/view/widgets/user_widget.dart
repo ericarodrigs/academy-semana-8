@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class UserWidget extends StatelessWidget {
-  const UserWidget({Key? key, required this.user}) : super(key: key);
+  const UserWidget({Key? key, required this.user, this.action}) : super(key: key);
 
   final UserModel user;
+  final Function()? action;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,9 @@ class UserWidget extends StatelessWidget {
                     child: const Text('Cancel'),
                   ),
                   TextButton(
-                    onPressed: () => () {},
+                    onPressed: () => {
+                      action!()
+                    },
                     child: const Text('Ok'),
                   ),
                 ],
@@ -60,7 +63,7 @@ class UserWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    user.name!,
+                    user.name,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -72,7 +75,7 @@ class UserWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    user.email!,
+                    user.email,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
