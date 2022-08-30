@@ -12,9 +12,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<UserModel> listUsers = [
-    UserModel(id: 1, name: 'Erica', email: 'e@e.com', gender: 'female'),
-    UserModel(id: 2, name: 'Erica2', email: 'e2@e2.com', gender: 'female'),
-    UserModel(id: 3, name: 'Erica3', email: 'e3@e3.com', gender: 'female'),
+    UserModel(id: 1, name: 'EricaEricaEricaEricaEricaEricaErica', email: 'e@e.come@e.come@e.come@e.come@e.come@e.come@e.com', gender: 'Feminino'),
+    UserModel(id: 2, name: 'Erica2', email: 'e2@e2.come2@e2.come2@e2.come2@e2.come2@e2.come2@e2.com', gender: 'Feminino'),
+    UserModel(id: 3, name: 'Erica3', email: 'e3@e3.com', gender: 'Masculino'),
   ];
 
   @override
@@ -23,13 +23,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Usuários'),
       ),
-      body: ListView.builder(
+      body: GridView.builder(
           itemCount: listUsers.length,
           itemBuilder: (context, index) {
             return UserWidget(
               user: listUsers[index],
             );
-          }),
+          },
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2)),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Modular.to.pushNamed('/create/');

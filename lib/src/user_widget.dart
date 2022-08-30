@@ -10,15 +10,14 @@ class UserWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4.0),
           ),
-          color: Colors.grey,
+          color: const Color(0xFFF2F5FA),
           child: InkWell(
-            onTap: () =>
-                Modular.to.pushNamed('/update/', arguments: user),
+            onTap: () => Modular.to.pushNamed('/update/', arguments: user),
             onLongPress: () => showDialog<String>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
@@ -37,20 +36,42 @@ class UserWidget extends StatelessWidget {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 200,
-                      width: 200,
-                      child: Icon(Icons.female),
+                SizedBox(
+                  height: 80,
+                  width: 80,
+                  child: Icon(
+                    user.gender == 'Feminino'
+                        ? Icons.woman
+                        : Icons.man,
+                    size: 80,
+                    color: user.gender == 'Feminino' ? Colors.purple : Colors.green,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    user.name!,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
                     ),
-                    Text(user.name!),
-                    Text(user.email!),
-                    Text(user.gender!),
-                  ],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    user.email!,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
                 ),
               ],
             ),
